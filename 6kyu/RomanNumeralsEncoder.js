@@ -1,3 +1,14 @@
+/** 
+  Преобразовать число из десятичной формы в римскую запись;
+  Число вида 1234 = 1000 + 200 + 30 + 4 в 
+  M CC XXX IV, не больше 3х одинаковых символов подряд
+  Начало с единиц, что бы не проверять длину числа, 
+  как результат лютый колхоз с разворотом строки.
+
+  Решил делать через 3 точки 1 5 10 
+  и менять буквы в зависимости от разряда
+ */
+
 const rome = {
   I: 1,
   V: 5,
@@ -8,6 +19,7 @@ const rome = {
   M: 1000,
 };
 
+//определяем диапозон цифры в разряде между 1, 5, 10
 const range = (x) => {
   if (x == 0) return 0;
   if(x >= 5) {
@@ -24,12 +36,15 @@ function solution(number){
   let minS = "I", midS = "V", maxS = "X";
   let count = 1;
   
+  // переворот что бы начать с единиц
   let n = (number).toString().split('').map(n => parseInt(n)).reverse();
   
   for (let i = 0; i < n.length; i++) {
   if(i == 3) x = 1;
   else x = range(n[i]);
   let tempStr = "";
+
+  // меняем буквы по разрядам
   switch(i) {
       case 0: 
         minS = "I";
@@ -53,6 +68,7 @@ function solution(number){
         break;
     }
 
+  //базовая буква
   switch(x) {
     case mid:
     tempStr+=midS;
@@ -66,7 +82,9 @@ function solution(number){
     default: 0;
   }
 
+  //счетчик повторов
   let count = 1;
+
   while(n[i] != x && n[i] != 0) {
     console.log(`${tempStr}`)
 
@@ -98,7 +116,7 @@ function solution(number){
     str += 'M';
   }
 }
-  
+  //строки крутятся, решение мутится
   return str.split('').reverse().join('');
 }
 
